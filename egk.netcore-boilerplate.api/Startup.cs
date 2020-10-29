@@ -5,6 +5,12 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Hosting;
+using Microsoft.EntityFrameworkCore;
+using egk.netcore_boilerplate.api.Data;
+using egk.netcore_boilerplate.api.Data.Repositories;
+using egk.netcore_boilerplate.api.Data.Repositories.Contracts;
+using egk.netcore_boilerplate.api.Data.Services.Contracts;
+using egk.netcore_boilerplate.api.Data.Services;
 
 namespace egk.netcore_boilerplate.api
 {
@@ -21,6 +27,19 @@ namespace egk.netcore_boilerplate.api
 
             services.AddMvcCore()
                 .SetCompatibilityVersion(CompatibilityVersion.Latest);
+
+            services.AddCors(o => o.AddPolicy("MyPolicy", builder =>
+            {
+                builder.AllowAnyOrigin()
+                       .AllowAnyMethod()
+                       .AllowAnyHeader();
+            }));
+
+            services.AddDbContext<NorthwindContext>(opts =>
+                    opts.UseSqlServer(_configuration.GetConnectionString("NorthwindConnection")));
+            services.AddScoped<IDBContext,NorthwindContext>();
+            services.AddScoped(typeof(IGenericRepository<,>), typeof(GenericRepository<,>));
+            services.AddScoped(typeof(IBaseService<,>), typeof(BaseService<,>));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -30,6 +49,7 @@ namespace egk.netcore_boilerplate.api
             {
                 app.UseDeveloperExceptionPage();
             }
+            app.UseCors("MyPolicy");
 
             app.UseRouting();
 
