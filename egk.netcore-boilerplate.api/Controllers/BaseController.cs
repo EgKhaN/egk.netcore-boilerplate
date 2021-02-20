@@ -2,6 +2,7 @@
 using egk.netcore_boilerplate.api.Data.Models;
 using egk.netcore_boilerplate.api.Data.Repositories;
 using egk.netcore_boilerplate.api.Data.Services.Contracts;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -35,15 +36,40 @@ namespace egk.netcore_boilerplate.api.Controllers
         [HttpPost()]
         public async Task<IActionResult> Create([FromBody] TEntity entity)
         {
-            TEntity newEntity= await baseService.InsertAsync(entity);
+            TEntity newEntity = await baseService.InsertAsync(entity);
             return Ok(newEntity);
         }
         [HttpPut("{id}")]
         public async Task<IActionResult> Update([FromRoute] int id, [FromBody] TEntity entity)
         {
+            var entityToUpdate = await baseService.GetByIDAsync(id);
+
+            if (entityToUpdate == null)
+            {
+                return NotFound();
+            }
+
             bool updated = await baseService.UpdateAsync(entity);
-            return Ok(updated);
+            return Ok(entity);
         }
+
+        [HttpPatch("{id}")]
+        public async Task<IActionResult> Patch([FromRoute] int id, [FromBody] JsonPatchDocument<TEntity> patchEntity)
+        {
+            var entityToUpdate = await baseService.GetByIDAsync(id);
+
+            if (entityToUpdate == null)
+            {
+                return NotFound();
+            }
+
+            patchEntity.ApplyTo(entityToUpdate, ModelState);
+
+            bool updated = await baseService.UpdateAsync(entityToUpdate);
+
+            return Ok(entityToUpdate);
+        }
+
         [HttpDelete()]
         public async Task<IActionResult> Delete(int id)
         {
