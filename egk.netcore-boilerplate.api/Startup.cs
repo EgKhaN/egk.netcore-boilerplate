@@ -11,6 +11,9 @@ using egk.netcore_boilerplate.api.Data.Repositories;
 using egk.netcore_boilerplate.api.Data.Repositories.Contracts;
 using egk.netcore_boilerplate.api.Data.Services.Contracts;
 using egk.netcore_boilerplate.api.Data.Services;
+using Microsoft.AspNetCore.Mvc.Formatters;
+using Microsoft.Extensions.Options;
+using System.Linq;
 
 namespace egk.netcore_boilerplate.api
 {
@@ -27,6 +30,14 @@ namespace egk.netcore_boilerplate.api
 
             services.AddMvcCore()
                 .SetCompatibilityVersion(CompatibilityVersion.Latest);
+
+            services
+    .AddControllersWithViews()
+    .AddNewtonsoftJson();
+            services.AddControllersWithViews(options =>
+            {
+                options.InputFormatters.Insert(0, GetJsonPatchInputFormatter());
+            });
 
             services.AddCors(o => o.AddPolicy("MyPolicy", builder =>
             {
@@ -57,6 +68,21 @@ namespace egk.netcore_boilerplate.api
             {
                 endpoints.MapControllers();
             });
+        }
+        private static NewtonsoftJsonPatchInputFormatter GetJsonPatchInputFormatter()
+        {
+            var builder = new ServiceCollection()
+                .AddLogging()
+                .AddMvc()
+                .AddNewtonsoftJson()
+                .Services.BuildServiceProvider();
+
+            return builder
+                .GetRequiredService<IOptions<MvcOptions>>()
+                .Value
+                .InputFormatters
+                .OfType<NewtonsoftJsonPatchInputFormatter>()
+                .First();
         }
     }
 }
