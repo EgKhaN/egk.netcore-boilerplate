@@ -1,0 +1,10 @@
+<form [formGroup]="productForm" *ngIf="product" (ngSubmit)="onSubmit()">
+  <input type="text" formControlName="productName">
+  <p *ngIf="productForm.controls.productName.errors?.required" style="color: red;">Required</p>
+  <br>
+  <input type="text"  formControlName="unitPrice">
+  <p *ngIf="productForm.controls.unitPrice.errors?.required" style="color: red;">Required</p>
+  <p *ngIf="productForm.controls.unitPrice.errors?.pattern" style="color: red;">Number Only</p>
+  <br>
+  <button class="button" type="submit">Update</button>
+</form>

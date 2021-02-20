@@ -13,6 +13,7 @@ export class ApiConfig {
     readonly Get = this.Base + `${this.controllerName}/{ID}`;
     readonly Create = this.Base + `${this.controllerName}`;
     readonly Update = this.Base + `${this.controllerName}/{ID}`;
+    readonly Patch = this.Base + `${this.controllerName}/{ID}`;
     readonly Delete = this.Base+ `${this.controllerName}/{ID}`;
 
     static readonly TestControllerName = 'test';
