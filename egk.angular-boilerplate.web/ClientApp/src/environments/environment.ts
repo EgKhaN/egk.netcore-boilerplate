@@ -4,7 +4,7 @@
 // The list of file replacements can be found in `angular.json`.
 export const environment = {
   production: false,
-  runFromdocker: true,
+  runFromdocker: false,
   app: { url: 'http://localhost:5000/api/' },
   docker: { url: 'http://localhost:8080/api/' },
 };
