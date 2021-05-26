@@ -9,8 +9,10 @@ namespace egk.netcore_boilerplate.api.Data.Entities.Contracts
     {
         DateTime CreatedDate { get; set; }
         DateTime? ModifiedDate { get; set; }
+        DateTime? DeletedDate { get; set; }
         string CreatedBy { get; set; }
         string ModifiedBy { get; set; }
+        string DeletedBy { get; set; }
         byte[] Version { get; set; }
     }
     public interface IAuditableEntity<T> : IAuditableEntity
