@@ -2,7 +2,6 @@
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
-using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -14,7 +13,7 @@ namespace egk.netcore_boilerplate.api.Data
         {
 
         }
-        public NorthwindContext(DbContextOptions options) : base(options)
+        public NorthwindContext(DbContextOptions<NorthwindContext> options) : base(options)
         {
         }
 

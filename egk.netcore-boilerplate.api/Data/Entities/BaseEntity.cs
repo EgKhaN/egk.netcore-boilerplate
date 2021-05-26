@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace egk.netcore_boilerplate.api.Data.Entities
 {
-    public abstract class Entity<T> : IEntity<T>
+    public abstract class BaseEntity<T> : IEntity<T>
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -19,8 +19,9 @@ namespace egk.netcore_boilerplate.api.Data.Entities
         }
 
         public string Name { get; set; }
+        public string Description { get; set; }
 
-        private DateTime? createdDate;
+        private DateTime? createdDate { get; set; }
         [DataType(DataType.DateTime)]
         public DateTime CreatedDate
         {
@@ -31,7 +32,11 @@ namespace egk.netcore_boilerplate.api.Data.Entities
         [DataType(DataType.DateTime)]
         public DateTime? ModifiedDate { get; set; }
 
-        public string CreatedBy { get; set; }
+        private string _createdBy { get; set; }
+        public string CreatedBy {
+            get { return _createdBy ?? "EgK"; }
+            set { _createdBy = value; }
+        }
 
         public string ModifiedBy { get; set; }
 

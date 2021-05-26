@@ -18,4 +18,9 @@ export class ApiConfig {
 
     static readonly TestControllerName = 'test';
 
+    static readonly TaskControllerName = 'task';
+    readonly GetAllTasksByProjectId = this.Base + `${this.controllerName}/GetAllTasksByProjectId/{projectId}`;
+
+    static readonly ProjectControllerName = 'project';
+
 }

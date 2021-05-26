@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, RouterEvent } from '@angular/router';
-import { ProductService } from '../product.service';
+import { ProductService } from './product.service';
 import { Product } from '../_model/product';
 import { FormBuilder, Validators } from '@angular/forms';
 import { CommonService } from '../_shared/Service/CommonService';

@@ -1,0 +1,25 @@
+<div class="container">
+	<form #taskForm="ngForm" (submit)="saveTask(taskForm.value); taskForm.resetForm()" >
+		<div class="form-group">
+      <label for="projectSelect">Project select</label>
+      <select class="form-control" id="projectSelect" (change)="onProjectChange($event)" #projectDropdown>
+        <option *ngFor="let project of projectArray" [selected]="project.Id == selectedProjectId" [value]="project.Id">{{project.Name}}</option>
+    </select>
+    <!--*ngFor="let project of projectArray" -->    <!-- <a class="dropdown-item" href="#"> {{project.Name}}</a> -->
+		<h1 class="text-center ">Tasks</h1>
+			<div class="input-group-prepend">
+        <input type="text" #taskTitle  class="form-control" placeholder="Add Task" name="taskTitle" ngModel>
+				<span class="input-group-text" (click)="addTask(taskTitle.value)">
+				<i class="material-icons">add</i></span>
+			</div>
+		</div>
+		<div class="data">
+		<ul class="list-unstyled">
+			<li  *ngFor="let task of taskArray" [ngClass]="{'done' : task.IsDone}">{{task.Title}}
+        <input type="checkbox" [checked]="task.IsDone" (change)="updateIsDone($event,task)" >
+        <i (click)="deleteItem(task)" class="material-icons">delete</i>
+      </li>
+		</ul>
+	</div>
+	</form>
+</div>
