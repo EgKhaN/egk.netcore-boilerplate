@@ -10,25 +10,29 @@ namespace egk.netcore_boilerplate.api.Data.Entities
     {
         private DateTime? createdDate { get; set; }
         [DataType(DataType.DateTime)]
-        public DateTime CreatedDate
+        public new DateTime CreatedDate
         {
             get { return createdDate ?? DateTime.UtcNow; }
             set { createdDate = value; }
         }
 
         [DataType(DataType.DateTime)]
-        public DateTime? ModifiedDate { get; set; }
+        public new DateTime? ModifiedDate { get; set; } 
+        
+        [DataType(DataType.DateTime)]
+        public DateTime? DeletedDate { get; set; }
 
         private string _createdBy { get; set; }
-        public string CreatedBy
+        public new string CreatedBy
         {
             get { return _createdBy ?? "EgK"; }
             set { _createdBy = value; }
         }
 
-        public string ModifiedBy { get; set; }
+        public new string ModifiedBy { get; set; }
+        public string DeletedBy { get; set; }
 
         [Timestamp]
-        public byte[] Version { get; set; }
+        public new byte[] Version { get; set; }
     }
 }
