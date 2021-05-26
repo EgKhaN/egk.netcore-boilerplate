@@ -1,6 +1,4 @@
-﻿using egk.netcore_boilerplate.api.Data.Entities.Contracts;
-using Microsoft.AspNetCore.Identity;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -8,18 +6,9 @@ using System.Threading.Tasks;
 
 namespace egk.netcore_boilerplate.api.Data.Entities
 {
-    public class ApplicationUser : IdentityUser, IEntity<string>
+    public class AuditableEntity<T> : BaseEntity<T>
     {
-        // Other properties
-
-        object IEntity.Id
-        {
-            get { return this.Id; }
-        }
-
-        public string Name { get; set; }
-
-        private DateTime? createdDate;
+        private DateTime? createdDate { get; set; }
         [DataType(DataType.DateTime)]
         public DateTime CreatedDate
         {
@@ -30,12 +19,16 @@ namespace egk.netcore_boilerplate.api.Data.Entities
         [DataType(DataType.DateTime)]
         public DateTime? ModifiedDate { get; set; }
 
-        public string CreatedBy { get; set; }
+        private string _createdBy { get; set; }
+        public string CreatedBy
+        {
+            get { return _createdBy ?? "EgK"; }
+            set { _createdBy = value; }
+        }
 
         public string ModifiedBy { get; set; }
 
         [Timestamp]
         public byte[] Version { get; set; }
-        public string Description { get; set; }
     }
 }

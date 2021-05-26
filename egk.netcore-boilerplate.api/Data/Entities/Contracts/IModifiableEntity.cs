@@ -8,5 +8,6 @@ namespace egk.netcore_boilerplate.api.Data.Entities.Contracts
     public interface IModifiableEntity
     {
         string Name { get; set; }
+        string Description { get; set; }
     }
 }
