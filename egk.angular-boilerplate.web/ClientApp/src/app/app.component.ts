@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ProductService } from './product.service';
+import { ProductService } from './product/product.service';
 import { Product } from './_model/product';
 
 @Component({
@@ -8,17 +8,5 @@ import { Product } from './_model/product';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  products: Product[];
-  title = 'egk-angular-boilerplate';
 
-  constructor(private productService: ProductService) { }
-  ngOnInit(): void {
-    this.getProducts();
-    
-  }
-    getProducts () {
-  this.productService.getAll().subscribe( (data) => {
-    this.products = data;
-  });
-  }
 }

@@ -24,57 +24,102 @@ namespace egk.netcore_boilerplate.api.Controllers
         }
 
         [HttpGet()]
-        public async Task<IActionResult> Get()
+        public virtual async Task<IActionResult> Get()
         {
-            return Ok(await baseService.GetAsync());
+            try
+            {
+                return Ok(await baseService.GetAsync());
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetById(int id)
+        public virtual async Task<IActionResult> GetById(int id)
         {
-            return Ok(await baseService.GetByIDAsync(id));
+            try
+            {
+                return Ok(await baseService.GetByIDAsync(id));
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
         [HttpPost()]
-        public async Task<IActionResult> Create([FromBody] TEntity entity)
+        public virtual async Task<IActionResult> Create([FromBody] TEntity entity)
         {
-            TEntity newEntity = await baseService.InsertAsync(entity);
-            return Ok(newEntity);
+            try
+            {
+                TEntity newEntity = await baseService.InsertAsync(entity);
+                return Ok(newEntity);
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
         }
         [HttpPut("{id}")]
-        public async Task<IActionResult> Update([FromRoute] int id, [FromBody] TEntity entity)
+        public virtual async Task<IActionResult> Update([FromRoute] int id, [FromBody] TEntity entity)
         {
-            var entityToUpdate = await baseService.GetByIDAsync(id);
-
-            if (entityToUpdate == null)
+            try
             {
-                return NotFound();
-            }
+                var entityToUpdate = await baseService.GetByIDAsync(id);
 
-            bool updated = await baseService.UpdateAsync(entity);
-            return Ok(entity);
+                if (entityToUpdate == null)
+                {
+                    return NotFound();
+                }
+
+                bool updated = await baseService.UpdateAsync(entity);
+                return Ok(entity);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         [HttpPatch("{id}")]
-        public async Task<IActionResult> Patch([FromRoute] int id, [FromBody] JsonPatchDocument<TEntity> patchEntity)
+        public virtual async Task<IActionResult> Patch([FromRoute] int id, [FromBody] JsonPatchDocument<TEntity> patchEntity)
         {
-            var entityToUpdate = await baseService.GetByIDAsync(id);
-
-            if (entityToUpdate == null)
+            try
             {
-                return NotFound();
+                var entityToUpdate = await baseService.GetByIDAsync(id);
+
+                if (entityToUpdate == null)
+                {
+                    return NotFound();
+                }
+
+                patchEntity.ApplyTo(entityToUpdate, ModelState);
+
+                bool updated = await baseService.UpdateAsync(entityToUpdate);
+
+                return Ok(entityToUpdate);
             }
+            catch (Exception ex)
+            {
 
-            patchEntity.ApplyTo(entityToUpdate, ModelState);
-
-            bool updated = await baseService.UpdateAsync(entityToUpdate);
-
-            return Ok(entityToUpdate);
+                throw ex;
+            }
         }
 
-        [HttpDelete()]
-        public async Task<IActionResult> Delete(int id)
+        [HttpDelete("{id}")]
+        public virtual async Task<IActionResult> Delete(int id)
         {
-            bool deleted = await baseService.DeleteAsync(id);
-            return Ok(deleted);
+            try
+            {
+                bool deleted = await baseService.DeleteAsync(id);
+                return Ok(deleted);
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
         }
 
     }

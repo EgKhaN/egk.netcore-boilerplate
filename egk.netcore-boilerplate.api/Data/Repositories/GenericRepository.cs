@@ -32,7 +32,7 @@ namespace egk.netcore_boilerplate.api.Data.Repositories
         public virtual async Task<IEnumerable<TEntity>> GetAsync(Expression<Func<TEntity, bool>> filter = null, Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null, string includeProperties = "")
         {
             IQueryable<TEntity> query = AsQueryable();
-            query = PerformInclusions(query, null, null, null, includeProperties);
+            query = PerformInclusions(query, filter, orderBy, null, includeProperties);
             return await query.ToListAsync();
         }
 
@@ -43,7 +43,10 @@ namespace egk.netcore_boilerplate.api.Data.Repositories
 
         public virtual async Task<TEntity> GetByIDAsync(object id)
         {
-            return await dbSet.FindAsync(id);
+            var entity = await dbSet.FindAsync(id);
+            if(entity != null)
+            _context.Entry(entity).State = EntityState.Detached;
+            return entity;
         }
         public virtual int CountAll(params Expression<Func<TEntity, object>>[] includeProperties)
         {
@@ -90,9 +93,9 @@ namespace egk.netcore_boilerplate.api.Data.Repositories
 
         public async virtual Task<TEntity> InsertAsync(TEntity entity)
         {
-            await dbSet.AddAsync(entity);
-            await _context.SaveChangesAsync();
-            return entity;
+                await dbSet.AddAsync(entity);
+                await _context.SaveChangesAsync();
+                return entity;
         }
 
         public virtual bool Update(TEntity entityToUpdate)

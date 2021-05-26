@@ -14,6 +14,7 @@ using egk.netcore_boilerplate.api.Data.Services;
 using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.Extensions.Options;
 using System.Linq;
+using Newtonsoft.Json.Serialization;
 
 namespace egk.netcore_boilerplate.api
 {
@@ -32,8 +33,9 @@ namespace egk.netcore_boilerplate.api
                 .SetCompatibilityVersion(CompatibilityVersion.Latest);
 
             services
-    .AddControllersWithViews()
-    .AddNewtonsoftJson();
+            .AddControllersWithViews()
+            .AddNewtonsoftJson(opt =>
+                 opt.SerializerSettings.ContractResolver = new DefaultContractResolver()); //For returning object names as they are defined,not camelCase
             services.AddControllersWithViews(options =>
             {
                 options.InputFormatters.Insert(0, GetJsonPatchInputFormatter());
@@ -48,7 +50,10 @@ namespace egk.netcore_boilerplate.api
 
             services.AddDbContext<NorthwindContext>(opts =>
                     opts.UseSqlServer(_configuration.GetConnectionString("NorthwindConnection")));
-            services.AddScoped<IDBContext,NorthwindContext>();
+
+            services.AddDbContext<TaskSystemContext>(opts =>
+                    opts.UseSqlServer(_configuration.GetConnectionString("TaskSystemConnection")));
+            services.AddScoped<IDBContext, NorthwindContext>();
             services.AddScoped(typeof(IGenericRepository<,>), typeof(GenericRepository<,>));
             services.AddScoped(typeof(IBaseService<,>), typeof(BaseService<,>));
         }

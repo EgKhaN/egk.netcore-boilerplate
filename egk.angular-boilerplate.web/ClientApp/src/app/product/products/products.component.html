@@ -1,0 +1,5 @@
+<div style="width: 50%; float:left;">
+  <ul *ngFor="let product of products; index as i;">
+    <li><a routerLink="/product/{{product?.productID}}">{{product.productName}}</a></li>
+  </ul>
+  </div>

@@ -75,7 +75,7 @@ namespace egk.netcore_boilerplate.api.Data.Services
 
         public async Task<TEntity> InsertAsync(TEntity entity)
         {
-            return await genericRepository.InsertAsync(entity);
+                return await genericRepository.InsertAsync(entity);
         }
 
         public bool Update(TEntity entityToUpdate)
