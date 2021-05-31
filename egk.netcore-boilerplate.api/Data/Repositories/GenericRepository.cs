@@ -1,4 +1,5 @@
-﻿using egk.netcore_boilerplate.api.Data.Repositories.Contracts;
+﻿using egk.netcore_boilerplate.api.Data.Entities.Contracts;
+using egk.netcore_boilerplate.api.Data.Repositories.Contracts;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -44,14 +45,14 @@ namespace egk.netcore_boilerplate.api.Data.Repositories
         public virtual async Task<TEntity> GetByIDAsync(object id)
         {
             var entity = await dbSet.FindAsync(id);
-            if(entity != null)
-            _context.Entry(entity).State = EntityState.Detached;
+            if (entity != null)
+                _context.Entry(entity).State = EntityState.Detached;
             return entity;
         }
         public virtual int CountAll(params Expression<Func<TEntity, object>>[] includeProperties)
         {
             var query = AsQueryable();
-            query = PerformInclusions(query,null ,null,includeProperties);
+            query = PerformInclusions(query, null, null, includeProperties);
             return query.Count();
         }
 
@@ -93,9 +94,9 @@ namespace egk.netcore_boilerplate.api.Data.Repositories
 
         public async virtual Task<TEntity> InsertAsync(TEntity entity)
         {
-                await dbSet.AddAsync(entity);
-                await _context.SaveChangesAsync();
-                return entity;
+            await dbSet.AddAsync(entity);
+            await _context.SaveChangesAsync();
+            return entity;
         }
 
         public virtual bool Update(TEntity entityToUpdate)
@@ -130,7 +131,14 @@ namespace egk.netcore_boilerplate.api.Data.Repositories
             {
                 dbSet.Attach(entityToDelete);
             }
-            dbSet.Remove(entityToDelete);
+            if ((entityToDelete is IAuditableEntity))
+            {
+                _context.Entry(entityToDelete).State = EntityState.Deleted;
+            }
+            else
+            {
+                dbSet.Remove(entityToDelete);
+            }
             return _context.SaveChanges() > 0;
         }
         public async virtual Task<bool> DeleteAsync(TEntity entityToDelete)
@@ -139,7 +147,15 @@ namespace egk.netcore_boilerplate.api.Data.Repositories
             {
                 dbSet.Attach(entityToDelete);
             }
-            dbSet.Remove(entityToDelete);
+            if ((entityToDelete is IAuditableEntity))
+            {
+                _context.Entry(entityToDelete).State = EntityState.Deleted;
+            }
+            else
+            {
+                dbSet.Remove(entityToDelete);
+            }
+
             return await _context.SaveChangesAsync() > 0;
         }
 
@@ -148,7 +164,7 @@ namespace egk.netcore_boilerplate.api.Data.Repositories
             return dbSet;
         }
 
-        private static IQueryable<TEntity> PerformInclusions(IQueryable<TEntity> query,Expression<Func<TEntity, bool>> filter = null, Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null, IEnumerable<Expression<Func<TEntity, object>>> includePropertiesExpression = null, string includeProperties = "")
+        private static IQueryable<TEntity> PerformInclusions(IQueryable<TEntity> query, Expression<Func<TEntity, bool>> filter = null, Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null, IEnumerable<Expression<Func<TEntity, object>>> includePropertiesExpression = null, string includeProperties = "")
         {
             if (filter != null)
             {
@@ -164,7 +180,7 @@ namespace egk.netcore_boilerplate.api.Data.Repositories
                 }
             }
 
-            if(includePropertiesExpression != null)
+            if (includePropertiesExpression != null)
             {
                 query = includePropertiesExpression.Aggregate(query, (current, includeProperty) => current.Include(includeProperty));
             }

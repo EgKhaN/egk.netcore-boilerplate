@@ -2,7 +2,7 @@
 
 namespace egk.netcore_boilerplate.api.Data.Models
 {
-    public class TaskStatus : BaseEntity<int>
+    public class TaskStatus : AuditableEntity<int>
     {
         public Models.Task Task { get; set; }
     }

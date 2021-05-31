@@ -1,4 +1,5 @@
-﻿using System;
+﻿using egk.netcore_boilerplate.api.Data.Entities.Contracts;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -6,33 +7,33 @@ using System.Threading.Tasks;
 
 namespace egk.netcore_boilerplate.api.Data.Entities
 {
-    public class AuditableEntity<T> : BaseEntity<T>
+    public abstract class AuditableEntity<T> : BaseEntity<T> , IAuditableEntity
     {
         private DateTime? createdDate { get; set; }
         [DataType(DataType.DateTime)]
-        public new DateTime CreatedDate
+        public DateTime CreatedDate
         {
             get { return createdDate ?? DateTime.UtcNow; }
             set { createdDate = value; }
         }
 
         [DataType(DataType.DateTime)]
-        public new DateTime? ModifiedDate { get; set; } 
+        public DateTime? ModifiedDate { get; set; } 
         
         [DataType(DataType.DateTime)]
         public DateTime? DeletedDate { get; set; }
 
         private string _createdBy { get; set; }
-        public new string CreatedBy
+        public string CreatedBy
         {
             get { return _createdBy ?? "EgK"; }
             set { _createdBy = value; }
         }
 
-        public new string ModifiedBy { get; set; }
+        public string ModifiedBy { get; set; }
         public string DeletedBy { get; set; }
 
         [Timestamp]
-        public new byte[] Version { get; set; }
+        public byte[] Version { get; set; }
     }
 }

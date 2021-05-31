@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace egk.netcore_boilerplate.api.Data.Models
 {
-    public class Task : BaseEntity<int>
+    public class Task : AuditableEntity<int>
     {
         public string Title { get; set; }
         private int? priority { get; set; }

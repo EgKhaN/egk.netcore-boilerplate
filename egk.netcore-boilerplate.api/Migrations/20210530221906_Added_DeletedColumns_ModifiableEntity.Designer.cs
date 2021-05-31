@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using egk.netcore_boilerplate.api.Data;
 
 namespace egk.netcore_boilerplate.api.Migrations
 {
     [DbContext(typeof(TaskSystemContext))]
-    partial class TaskSystemContextModelSnapshot : ModelSnapshot
+    [Migration("20210530221906_Added_DeletedColumns_ModifiableEntity")]
+    partial class Added_DeletedColumns_ModifiableEntity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -64,42 +66,42 @@ namespace egk.netcore_boilerplate.api.Migrations
                         {
                             Id = 1,
                             CreatedBy = "EgK",
-                            CreatedDate = new DateTime(2021, 5, 30, 22, 19, 6, 586, DateTimeKind.Utc).AddTicks(6582),
+                            CreatedDate = new DateTime(2021, 5, 30, 22, 19, 6, 579, DateTimeKind.Utc).AddTicks(5976),
                             Name = "Task System"
                         },
                         new
                         {
                             Id = 2,
                             CreatedBy = "EgK",
-                            CreatedDate = new DateTime(2021, 5, 30, 22, 19, 6, 586, DateTimeKind.Utc).AddTicks(6829),
+                            CreatedDate = new DateTime(2021, 5, 30, 22, 19, 6, 579, DateTimeKind.Utc).AddTicks(6265),
                             Name = "Budget System"
                         },
                         new
                         {
                             Id = 3,
                             CreatedBy = "EgK",
-                            CreatedDate = new DateTime(2021, 5, 30, 22, 19, 6, 586, DateTimeKind.Utc).AddTicks(7082),
+                            CreatedDate = new DateTime(2021, 5, 30, 22, 19, 6, 579, DateTimeKind.Utc).AddTicks(6446),
                             Name = "Boilerplate"
                         },
                         new
                         {
                             Id = 4,
                             CreatedBy = "EgK",
-                            CreatedDate = new DateTime(2021, 5, 30, 22, 19, 6, 586, DateTimeKind.Utc).AddTicks(7254),
+                            CreatedDate = new DateTime(2021, 5, 30, 22, 19, 6, 579, DateTimeKind.Utc).AddTicks(6657),
                             Name = "Scheduler"
                         },
                         new
                         {
                             Id = 5,
                             CreatedBy = "EgK",
-                            CreatedDate = new DateTime(2021, 5, 30, 22, 19, 6, 586, DateTimeKind.Utc).AddTicks(7425),
+                            CreatedDate = new DateTime(2021, 5, 30, 22, 19, 6, 579, DateTimeKind.Utc).AddTicks(6832),
                             Name = "Human Resources"
                         },
                         new
                         {
                             Id = 6,
                             CreatedBy = "EgK",
-                            CreatedDate = new DateTime(2021, 5, 30, 22, 19, 6, 586, DateTimeKind.Utc).AddTicks(7662),
+                            CreatedDate = new DateTime(2021, 5, 30, 22, 19, 6, 579, DateTimeKind.Utc).AddTicks(7006),
                             Name = "Personal Asistant"
                         });
                 });
@@ -216,35 +218,35 @@ namespace egk.netcore_boilerplate.api.Migrations
                         {
                             Id = 1,
                             CreatedBy = "EgK",
-                            CreatedDate = new DateTime(2021, 5, 30, 22, 19, 6, 587, DateTimeKind.Utc).AddTicks(2365),
+                            CreatedDate = new DateTime(2021, 5, 30, 22, 19, 6, 581, DateTimeKind.Utc).AddTicks(7191),
                             Name = "ToDo"
                         },
                         new
                         {
                             Id = 2,
                             CreatedBy = "EgK",
-                            CreatedDate = new DateTime(2021, 5, 30, 22, 19, 6, 587, DateTimeKind.Utc).AddTicks(2613),
+                            CreatedDate = new DateTime(2021, 5, 30, 22, 19, 6, 581, DateTimeKind.Utc).AddTicks(7424),
                             Name = "In Progress"
                         },
                         new
                         {
                             Id = 3,
                             CreatedBy = "EgK",
-                            CreatedDate = new DateTime(2021, 5, 30, 22, 19, 6, 587, DateTimeKind.Utc).AddTicks(2785),
+                            CreatedDate = new DateTime(2021, 5, 30, 22, 19, 6, 581, DateTimeKind.Utc).AddTicks(7671),
                             Name = "Review"
                         },
                         new
                         {
                             Id = 4,
                             CreatedBy = "EgK",
-                            CreatedDate = new DateTime(2021, 5, 30, 22, 19, 6, 587, DateTimeKind.Utc).AddTicks(2952),
+                            CreatedDate = new DateTime(2021, 5, 30, 22, 19, 6, 581, DateTimeKind.Utc).AddTicks(7844),
                             Name = "QA"
                         },
                         new
                         {
                             Id = 5,
                             CreatedBy = "EgK",
-                            CreatedDate = new DateTime(2021, 5, 30, 22, 19, 6, 587, DateTimeKind.Utc).AddTicks(3156),
+                            CreatedDate = new DateTime(2021, 5, 30, 22, 19, 6, 581, DateTimeKind.Utc).AddTicks(8013),
                             Name = "Deployed"
                         });
                 });
