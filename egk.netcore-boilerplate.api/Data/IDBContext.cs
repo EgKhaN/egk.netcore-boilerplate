@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace egk.netcore_boilerplate.api.Data
@@ -12,7 +13,7 @@ namespace egk.netcore_boilerplate.api.Data
         //Database Database { get; }
         DbSet<TEntity> Set<TEntity>() where TEntity : class;
         int SaveChanges();
-        Task<int> SaveChangesAsync();
+        Task<int> SaveChangesAsync(CancellationToken cancellationToken = default(CancellationToken));
         Microsoft.EntityFrameworkCore.ChangeTracking.EntityEntry<TEntity> Entry<TEntity>(TEntity entity) where TEntity : class;
     }
 }

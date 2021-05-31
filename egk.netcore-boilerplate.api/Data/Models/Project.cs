@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace egk.netcore_boilerplate.api.Data.Models
 {
-    public class Project : BaseEntity<int>
+    public class Project : AuditableEntity<int>
     {
         public ICollection<Models.Task> Tasks { get; set; }
     }

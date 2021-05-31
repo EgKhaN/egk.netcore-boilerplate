@@ -56,6 +56,8 @@ namespace egk.netcore_boilerplate.api
             services.AddScoped<IDBContext, NorthwindContext>();
             services.AddScoped(typeof(IGenericRepository<,>), typeof(GenericRepository<,>));
             services.AddScoped(typeof(IBaseService<,>), typeof(BaseService<,>));
+
+            services.AddHttpContextAccessor();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

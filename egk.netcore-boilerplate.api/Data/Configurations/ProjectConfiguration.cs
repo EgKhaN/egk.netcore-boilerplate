@@ -8,10 +8,10 @@ using System.Threading.Tasks;
 
 namespace egk.netcore_boilerplate.api.Data.Configurations
 {
-    public class ProjectConfiguration : IEntityTypeConfiguration<Models.Project>
-    {
-        public void Configure(EntityTypeBuilder<Models.Project> builder)
-        {
-        }
-    }
+    //public class ProjectConfiguration : IEntityTypeConfiguration<Models.Project>
+    //{
+    //    public void Configure(EntityTypeBuilder<Models.Project> builder)
+    //    {
+    //    }
+    //}
 }
