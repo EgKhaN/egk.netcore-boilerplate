@@ -15,6 +15,7 @@ using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.Extensions.Options;
 using System.Linq;
 using Newtonsoft.Json.Serialization;
+using Microsoft.OpenApi.Models;
 
 namespace egk.netcore_boilerplate.api
 {
@@ -48,11 +49,22 @@ namespace egk.netcore_boilerplate.api
                        .AllowAnyHeader();
             }));
 
+            services.AddSwaggerGen();
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo
+                {
+                    Version = "v1",
+                    Title = "Implement Swagger UI",
+                    Description = "A simple example to Implement Swagger UI",
+                });
+            });
+
             services.AddDbContext<NorthwindContext>(opts =>
                     opts.UseSqlServer(_configuration.GetConnectionString("NorthwindConnection")));
 
             services.AddDbContext<TaskSystemContext>(opts =>
-                    opts.UseSqlServer(_configuration.GetConnectionString("TaskSystemConnection")));
+                    opts.UseSqlServer(_configuration.GetConnectionString("TaskSystemAzureConnection")));
             services.AddScoped<IDBContext, NorthwindContext>();
             services.AddScoped(typeof(IGenericRepository<,>), typeof(GenericRepository<,>));
             services.AddScoped(typeof(IBaseService<,>), typeof(BaseService<,>));
@@ -70,6 +82,11 @@ namespace egk.netcore_boilerplate.api
             app.UseCors("MyPolicy");
 
             app.UseRouting();
+
+            app.UseSwagger();
+            app.UseSwaggerUI(c => {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Showing API V1");
+            });
 
             app.UseEndpoints(endpoints =>
             {

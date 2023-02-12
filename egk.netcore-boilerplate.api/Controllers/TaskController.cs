@@ -26,7 +26,7 @@ namespace egk.netcore_boilerplate.api.Controllers
         {
             try
             {
-                return Ok(await baseService.GetAsync(orderBy: q => q.OrderBy(a => a.IsDone)));
+                return Ok(await baseService.GetAsync(filter:q=> !q.DeletedDate.HasValue , orderBy: q => q.OrderBy(a => a.IsDone)));
             }
             catch (Exception ex)
             {
@@ -40,7 +40,7 @@ namespace egk.netcore_boilerplate.api.Controllers
         {
             try
             {
-                return Ok(await baseService.GetAsync(filter: q=>q.ProjectId == projectId ,orderBy: q => q.OrderBy(a => a.IsDone)));
+                return Ok(await baseService.GetAsync(filter: q=> (q.ProjectId == projectId && !q.DeletedDate.HasValue), orderBy: q => q.OrderBy(a => a.IsDone)));
             }
             catch (Exception ex)
             {

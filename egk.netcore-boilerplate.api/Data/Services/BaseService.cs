@@ -103,7 +103,7 @@ namespace egk.netcore_boilerplate.api.Data.Services
         }
 
         public async Task<bool> DeleteAsync(object id)
-        {
+         {
             return await genericRepository.DeleteAsync(id);
         }
     }
